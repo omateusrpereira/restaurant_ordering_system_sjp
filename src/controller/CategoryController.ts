@@ -142,6 +142,12 @@ async function update(req: Request<{ id: string }>, res: Response) {
     } catch (error) {
         console.log("Erro ao atualizar categoria: ", error);
 
+        if (error instanceof ValidationError) {
+            res.status(400).json({
+                message: error.message,
+            });
+        }
+
         if (error instanceof NotFoundError) {
             res.status(404).json({
                 message: error.message,

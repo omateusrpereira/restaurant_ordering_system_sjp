@@ -19,7 +19,7 @@ async function findById(id: string): Promise<Category> {
         .from("categories")
         .select("*")
         .eq("id", id)
-        .single();
+        .maybeSingle();
 
     if (error) {
         throw error;
@@ -60,7 +60,7 @@ async function create(category: Category) {
 }
 
 async function update(category: Category) {
-    const id = category.getId;
+    const id = category.getId();
 
     if (!id) {
         throw new Error("Categoria sem ID não pode ser atualizada.")
