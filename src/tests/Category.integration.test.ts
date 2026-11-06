@@ -103,11 +103,12 @@ describe("Category - Testes de integração", () => {
         );
     });
 
-    /*
+
     it("deve atualizar os dados de uma categoria", async () => {
-        const { id } = await createCategory();
+        const { id, data } = await createCategory();
+
         const updatedData = {
-            ...makeCategoryData(),
+            ...data,
             description: "Descrição atualizada pelo teste",
             icon: "🥤",
             display_order: 5,
@@ -116,7 +117,7 @@ describe("Category - Testes de integração", () => {
 
         const response = await request(app)
             .put(`/categories/${id}`)
-            .query(updatedData);
+            .send(updatedData);
 
         expect(response.status).toBe(200);
         expect(response.body).toMatchObject({
@@ -124,16 +125,23 @@ describe("Category - Testes de integração", () => {
             ...updatedData,
         });
     });
-    
+
     it("deve remover uma categoria existente", async () => {
         const { id } = await createCategory();
 
-        const response = await request(app).delete(`/categories/${id}`);
+        const response = await request(app)
+            .delete(`/categories/${id}`);
 
-        expect(response.status).toBe(200);
-        expect(response.body).toEqual({
-            message: "Categoria removida com sucesso.",
-        });
+        const { data, error } = await supabase
+            .from("categories")
+            .select("id")
+            .eq("id", id)
+            .maybeSingle();
+
+        expect(error).toBeNull();
+        expect(data).toBeNull();
+
+        expect(response.status).toBe(404);
     });
-    */
+
 })
