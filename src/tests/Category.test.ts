@@ -157,7 +157,7 @@ describe("Category - Testes Unitários", () => {
 
     });
 
-    it("deve permitir alteraar a descrição de uma categoria", () => {
+    it("deve permitir alterar a descrição de uma categoria", () => {
 
         const category = new Category("Pizzas", 1, "Categoria de pizzas tradicionais");
 
