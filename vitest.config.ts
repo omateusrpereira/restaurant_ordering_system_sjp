@@ -1,7 +1,11 @@
+import { existsSync } from "node:fs";
 import { loadEnvFile } from "node:process";
 import { defineConfig } from "vitest/config";
 
-loadEnvFile(".env");
+// Carrega o .env local apenas quando o arquivo existir.
+if (existsSync(".env")) {
+    loadEnvFile(".env");
+}
 
 export default defineConfig({
     test: {
@@ -13,4 +17,4 @@ export default defineConfig({
             include: ["src/model/**/*.ts"]
         }
     }
-})
+});
